@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club EDEN — 桐生 亜綺羅</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Noto+Serif+JP:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   ROOT VARIABLES
+═══════════════════════════════════════════ */
+:root {
+  --void:    #07080d;
+  --deep:    #0e0f16;
+  --surface: #14151e;
+  --card:    #1a1b26;
+  --gold:    #c4a25a;
+  --gold-dim:#7a6435;
+  --gold-glow: rgba(196,162,90,0.12);
+  --rose:    #b87080;
+  --rose-dim: rgba(184,112,128,0.2);
+  --ivory:   #f0ebe0;
+  --text:    #c8c2b6;
+  --muted:   #6e6860;
+  --line:    rgba(196,162,90,0.12);
+  --line2:   rgba(240,235,224,0.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: 'Noto Serif KR', serif;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+/* grain */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9998; opacity: 0.3;
+}
+
+/* ═══════════════════════════════════════════
+   INTRO SCREEN
+═══════════════════════════════════════════ */
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--void);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: opacity 0.9s ease, visibility 0.9s ease;
+}
+#intro.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Radial glow behind intro text */
+#intro::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(196,162,90,0.07) 0%, transparent 70%);
+  pointer-events: none;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50%       { transform: scale(1.2); opacity: 1; }
+}
+
+/* Thin horizontal lines */
+#intro::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 79px,
+      rgba(196,162,90,0.03) 79px, rgba(196,162,90,0.03) 80px);
+  pointer-events: none;
+}
+
+.intro-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.7em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 64px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.3s forwards;
+  position: relative; z-index: 1;
+}
+
+.intro-lines {
+  text-align: center;
+  max-width: 640px;
+  padding: 0 32px;
+  position: relative; z-index: 1;
+}
+
+.intro-line {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 300;
+  color: var(--ivory);
+  line-height: 1.9;
+  letter-spacing: 0.06em;
+  opacity: 0;
+}
+.intro-line:nth-child(1) { animation: fadeUp 1.2s ease 0.8s forwards; }
+.intro-line:nth-child(2) { animation: fadeUp 1.2s ease 1.4s forwards; }
+.intro-line:nth-child(3) { animation: fadeUp 1.2s ease 2.0s forwards; }
+.intro-line:nth-child(4) {
+  font-style: normal;
+  font-size: clamp(12px, 1.5vw, 15px);
+  letter-spacing: 0.5em;
+  color: var(--gold);
+  margin-top: 32px;
+  animation: fadeUp 1.2s ease 2.8s forwards;
+}
+
+.intro-skip {
+  position: absolute;
+  bottom: 48px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+  text-transform: uppercase;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 1s ease 3.4s forwards;
+}
+
+.intro-skip span {
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background: var(--muted);
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+/* gold bar */
+.intro-gold-line {
+  position: absolute;
+  left: 50%; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, var(--gold-dim) 30%, var(--gold-dim) 70%, transparent 100%);
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   MAIN SITE (initially hidden, shown after intro)
+═══════════════════════════════════════════ */
+#site {
+  opacity: 0;
+  transition: opacity 1s ease 0.2s;
+  pointer-events: none;
+}
+#site.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ═══════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════ */
+.site-header {
+  border-bottom: 1px solid var(--line);
+  background: var(--void);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+
+.site-header-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.site-logo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.site-logo-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  line-height: 1;
+}
+.site-logo-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.site-header-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  overflow: hidden;
+}
+
+/* Atmospheric bg */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 50% 80% at 20% 60%, rgba(196,162,90,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(184,112,128,0.05) 0%, transparent 55%),
+    linear-gradient(135deg, #07080d 0%, #0e0f16 100%);
+  pointer-events: none;
+}
+
+.hero-text-col {
+  position: relative; z-index: 2;
+  padding: 100px 80px 80px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Vertical kanji watermark */
+.hero-text-col::before {
+  content: '桐生亜綺羅';
+  position: absolute;
+  top: 60px; left: 40px;
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 900;
+  font-size: 160px;
+  color: rgba(196,162,90,0.03);
+  writing-mode: vertical-rl;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.05em;
+}
+
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--gold);
+}
+
+.hero-name-jp {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 900;
+  color: var(--ivory);
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+
+.hero-name-kr {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(13px, 1.5vw, 17px);
+  font-weight: 300;
+  color: var(--muted);
+  letter-spacing: 0.6em;
+  margin-bottom: 40px;
+}
+
+.hero-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(16px, 2vw, 20px);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--text);
+  max-width: 500px;
+  margin-bottom: 56px;
+  border-left: 2px solid var(--gold-dim);
+  padding-left: 24px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.hero-stat {
+  padding: 0 32px 0 0;
+  margin-right: 32px;
+  border-right: 1px solid var(--line2);
+}
+.hero-stat:last-child { border-right: none; }
+.hsk {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.35em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hsv {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ivory);
+  letter-spacing: 0.05em;
+}
+
+.hero-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 40px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-decoration: none;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+.hero-play-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: translateX(-100%);
+  transition: transform 0.35s ease;
+  z-index: -1;
+}
+.hero-play-btn:hover {
+  color: var(--void);
+}
+.hero-play-btn:hover::before { transform: translateX(0); }
+
+/* Hero photo col */
+.hero-photo-col {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.hero-photo-frame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-photo-frame img,
+.hero-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  filter: brightness(0.9) contrast(1.05);
+  transition: transform 0.8s ease, filter 0.5s ease;
+}
+.hero-photo-frame:hover img { transform: scale(1.04); filter: brightness(1) contrast(1); }
+
+.hero-photo-placeholder {
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  cursor: default;
+}
+.hero-photo-placeholder span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold-dim);
+  text-align: center;
+  line-height: 1.8;
+}
+
+.hero-photo-frame::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, var(--void) 0%, rgba(7,8,13,0.3) 25%, transparent 50%),
+    linear-gradient(180deg, transparent 60%, var(--void) 100%);
+  pointer-events: none;
+}
+
+.photo-bottom-label {
+  position: absolute;
+  bottom: 28px; left: 0; right: 0;
+  text-align: center;
+  z-index: 3;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: rgba(196,162,90,0.4);
+  text-transform: uppercase;
+}
+
+/* Corner decor */
+.frame-corner {
+  position: absolute;
+  width: 28px; height: 28px;
+  z-index: 4;
+}
+.frame-corner.tl { top: 16px; left: 16px; border-top: 1px solid var(--gold-dim); border-left: 1px solid var(--gold-dim); }
+.frame-corner.tr { top: 16px; right: 16px; border-top: 1px solid var(--gold-dim); border-right: 1px solid var(--gold-dim); }
+.frame-corner.bl { bottom: 16px; left: 16px; border-bottom: 1px solid var(--gold-dim); border-left: 1px solid var(--gold-dim); }
+.frame-corner.br { bottom: 16px; right: 16px; border-bottom: 1px solid var(--gold-dim); border-right: 1px solid var(--gold-dim); }
+
+/* ═══════════════════════════════════════════
+   TAB NAV
+═══════════════════════════════════════════ */
+.tab-bar {
+  border-bottom: 1px solid var(--line);
+  background: var(--deep);
+  padding: 0 80px;
+  display: flex;
+  gap: 0;
+}
+
+.tab-btn {
+  padding: 20px 0;
+  margin-right: 56px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.tab-btn.active::after { transform: scaleX(1); }
+.tab-btn .tb-jp {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 8px;
+  letter-spacing: 0.4em;
+  color: var(--gold-dim);
+  font-weight: 300;
+}
+.tab-btn.active .tb-jp { color: var(--gold); }
+.tab-btn .tb-kr {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  transition: color 0.25s ease;
+}
+.tab-btn.active .tb-kr { color: var(--ivory); }
+.tab-btn:not(.active):hover .tb-kr { color: var(--text); }
+
+/* ═══════════════════════════════════════════
+   PANELS
+═══════════════════════════════════════════ */
+.tab-panel { display: none; }
+.tab-panel.active {
+  display: block;
+  animation: panelIn 0.5s ease forwards;
+}
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.panel-wrap {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 80px 80px;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION HEADER (shared)
+═══════════════════════════════════════════ */
+.sec-title-block {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.sec-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.45em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sec-eyebrow::before {
+  content: '';
+  display: block;
+  width: 20px; height: 1px;
+  background: var(--gold);
+}
+.sec-title-jp {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  color: var(--ivory);
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+}
+.sec-title-kr {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.45em;
+  color: var(--muted);
+  margin-top: 4px;
+  font-family: 'Noto Serif KR', serif;
+}
+.sec-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  font-weight: 300;
+  color: rgba(196,162,90,0.08);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* ═══════════════════════════════════════════
+   WORLD TAB — INTRO TEXT
+═══════════════════════════════════════════ */
+.world-intro {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 80px;
+  align-items: start;
+  margin-bottom: 80px;
+}
+
+.world-body p {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 2.4;
+  color: var(--text);
+  font-family: 'Noto Serif KR', serif;
+}
+.world-body p + p { margin-top: 20px; }
+.world-body p strong { color: var(--ivory); font-weight: 700; }
+
+.world-aside {
+  padding-top: 8px;
+}
+.world-aside-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--card);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.world-aside-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.aside-photo-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  text-align: center;
+  line-height: 2;
+}
+
+/* Pull quote */
+.world-pull {
+  margin: 56px 0;
+  padding: 36px 48px;
+  background: var(--card);
+  border-top: 1px solid var(--gold-dim);
+  border-bottom: 1px solid var(--gold-dim);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.world-pull::before {
+  content: '✶';
+  position: absolute;
+  left: 50%; top: -12px;
+  transform: translateX(-50%);
+  background: var(--card);
+  padding: 0 16px;
+  font-size: 14px;
+  color: var(--gold-dim);
+}
+.world-pull p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(17px, 2.2vw, 22px);
+  font-weight: 300;
+  color: var(--ivory);
+  line-height: 1.85;
+}
+.world-pull-attr {
+  margin-top: 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+}
+
+/* Gold rule */
+.gold-rule {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  margin: 64px 0;
+}
+
+/* ═══════════════════════════════════════════
+   CLUB EDEN CARD
+═══════════════════════════════════════════ */
+.eden-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  margin-bottom: 72px;
+  position: relative;
+  overflow: hidden;
+}
+.eden-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.eden-card::after {
+  content: 'EDEN';
+  position: absolute;
+  right: -20px; bottom: -20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 140px;
+  font-weight: 600;
+  color: rgba(196,162,90,0.04);
+  line-height: 1;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.eden-card-header {
+  padding: 32px 44px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.eden-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.eden-name-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.eden-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--line);
+}
+.eden-stat {
+  padding: 20px 28px;
+  border-right: 1px solid var(--line);
+  transition: background 0.2s ease;
+}
+.eden-stat:hover { background: var(--surface); }
+.eden-stat:last-child { border-right: none; }
+.esk {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.esv {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ivory);
+}
+
+.eden-body {
+  padding: 36px 44px;
+}
+.eden-body p {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 2.3;
+  color: var(--text);
+  font-family: 'Noto Serif KR', serif;
+}
+.eden-body p + p { margin-top: 16px; }
+.eden-body p strong { color: var(--ivory); font-weight: 700; }
+
+/* ═══════════════════════════════════════════
+   NPC CARDS
+═══════════════════════════════════════════ */
+.npc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.npc-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+.npc-card:hover { border-color: var(--gold-dim); }
+
+.npc-photo {
+  position: relative;
+  background: var(--surface);
+  overflow: hidden;
+  min-height: 200px;
+}
+.npc-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  filter: brightness(0.85);
+}
+.npc-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--surface);
+}
+.npc-photo-placeholder span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--gold-dim);
+  text-align: center;
+  line-height: 2;
+  padding: 0 12px;
+}
+.npc-photo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 70%, var(--card) 100%);
+  pointer-events: none;
+}
+
+.npc-info {
+  padding: 24px 24px;
+}
+.npc-role {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.npc-name-jp {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ivory);
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+.npc-name-kr {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.35em;
+  font-weight: 300;
+  margin-bottom: 14px;
+}
+.npc-meta {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.npc-meta-item { }
+.nmk {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.nmv { font-size: 12px; font-weight: 600; color: var(--ivory); }
+
+.npc-desc {
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.9;
+  color: var(--text);
+  font-family: 'Noto Serif KR', serif;
+  border-top: 1px solid var(--line2);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+/* ═══════════════════════════════════════════
+   CHARACTER TAB
+═══════════════════════════════════════════ */
+.char-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 72px;
+  align-items: start;
+}
+
+/* Left: text info */
+.char-text { }
+
+.char-backstory {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 2;
+  color: var(--text);
+  border-left: 2px solid var(--gold-dim);
+  padding: 4px 0 4px 28px;
+  margin-bottom: 40px;
+}
+
+/* Stats table */
+.char-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 32px;
+  border: 1px solid var(--line);
+}
+.char-table tr {
+  border-bottom: 1px solid var(--line2);
+  transition: background 0.2s ease;
+}
+.char-table tr:hover { background: var(--card); }
+.char-table tr:last-child { border-bottom: none; }
+.char-table td {
+  padding: 14px 20px;
+  vertical-align: top;
+  line-height: 1.8;
+}
+.char-table td:first-child {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  text-transform: uppercase;
+  width: 100px;
+  border-right: 1px solid var(--line2);
+  white-space: nowrap;
+}
+.char-table td:last-child {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  font-family: 'Noto Serif KR', serif;
+}
+.char-table td:last-child strong { color: var(--ivory); font-weight: 700; }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip {
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+/* Fear box */
+.char-fear {
+  background: var(--card);
+  border-left: 2px solid var(--rose);
+  padding: 24px 28px;
+  margin-bottom: 16px;
+}
+.char-fear-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--rose);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.char-fear p {
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.95;
+  color: var(--text);
+}
+.char-fear p strong { color: var(--ivory); }
+
+.char-note {
+  border: 1px dashed rgba(184,112,128,0.25);
+  background: rgba(184,112,128,0.04);
+  padding: 20px 28px;
+  margin-bottom: 36px;
+}
+.char-note-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: rgba(184,112,128,0.5);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.char-note p {
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.95;
+  color: #b07888;
+}
+
+/* Play button */
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 40px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-decoration: none;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+.play-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: translateX(-100%);
+  transition: transform 0.35s ease;
+  z-index: -1;
+}
+.play-btn:hover { color: var(--void); }
+.play-btn:hover::before { transform: translateX(0); }
+
+/* Right: photo stack */
+.char-photo-col { }
+
+.char-main-photo {
+  width: 100%;
+  aspect-ratio: 2/3;
+  background: var(--card);
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.char-main-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  filter: brightness(0.92) contrast(1.05);
+  transition: transform 0.7s ease, filter 0.4s ease;
+}
+.char-main-photo:hover img {
+  transform: scale(1.04);
+  filter: brightness(1) contrast(1);
+}
+.char-main-photo::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(transparent, var(--void));
+  pointer-events: none;
+}
+.photo-placeholder-main {
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--card);
+}
+.photo-placeholder-main span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--gold-dim);
+  text-align: center;
+  line-height: 2;
+  padding: 0 20px;
+}
+.photo-placeholder-main .ph-icon {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 40px;
+  color: rgba(196,162,90,0.15);
+}
+
+.char-photo-secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.char-photo-sm {
+  aspect-ratio: 1;
+  background: var(--card);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  position: relative;
+}
+.char-photo-sm img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  filter: brightness(0.88);
+  transition: transform 0.5s ease;
+}
+.char-photo-sm:hover img { transform: scale(1.06); }
+.char-photo-sm::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 60%, var(--void) 100%);
+  pointer-events: none;
+}
+
+.photo-placeholder-sm {
+  width: 100%; height: 100%;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.photo-placeholder-sm span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--gold-dim);
+  text-align: center;
+  line-height: 1.8;
+  padding: 0 8px;
+}
+
+/* Photo caption under stack */
+.photo-caption {
+  margin-top: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 20px 80px;
+  background: var(--deep);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1000px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-photo-col { height: 400px; }
+  .hero-text-col { padding: 60px 40px; }
+  .hero-text-col::before { display: none; }
+  .panel-wrap { padding: 56px 40px; }
+  .tab-bar { padding: 0 40px; }
+  footer { padding: 16px 40px; }
+  .world-intro { grid-template-columns: 1fr; }
+  .world-aside { display: none; }
+  .char-layout { grid-template-columns: 1fr; }
+  .char-photo-col { order: -1; }
+  .npc-grid { grid-template-columns: 1fr; }
+  .eden-stats { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .site-header-inner { padding: 0 24px; }
+  .hero-text-col { padding: 48px 24px; }
+  .tab-bar { padding: 0 24px; }
+  .tab-btn { margin-right: 28px; }
+  .panel-wrap { padding: 40px 24px; }
+  footer { padding: 16px 24px; flex-direction: column; text-align: center; }
+  .npc-card { grid-template-columns: 1fr; }
+  .npc-photo { min-height: 200px; }
+  .eden-stats { grid-template-columns: 1fr 1fr; }
+  .hero-stats { gap: 16px; }
+  .hero-stat { padding-right: 16px; margin-right: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     INTRO SCREEN
+═══════════════════════════════════════════ -->
+<div id="intro">
+  <div class="intro-gold-line"></div>
+  <div class="intro-logo">Club Eden — 가부키초</div>
+  <div class="intro-lines">
+    <span class="intro-line">사랑에는 가격이 있다.</span>
+    <span class="intro-line">외로움에도, 온기에도, 눈맞춤의 깊이에도.</span>
+    <span class="intro-line">그리고 그 모든 것의 값을 매기는 남자가 있다.</span>
+    <span class="intro-line">— 에덴의 왕, 키류 아키라</span>
+  </div>
+  <div class="intro-skip">
+    <span></span>클릭하여 입장
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN SITE
+═══════════════════════════════════════════ -->
+<div id="site">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="site-logo">
+        <div class="site-logo-main">Club Eden</div>
+        <div class="site-logo-sub">新宿 歌舞伎町 · Host Club</div>
+      </div>
+      <div class="site-header-tag">AI Character · 캐릭터 소개</div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text-col">
+      <div class="hero-eyebrow">キャラクター紹介</div>
+      <h1 class="hero-name-jp">桐生 亜綺羅</h1>
+      <p class="hero-name-kr">키류 아키라</p>
+      <p class="hero-desc">
+        "에덴의 왕좌에 앉은 자의 눈이 이토록 텅 비어 있다는 것을,
+        네온 불빛 아래에서는 아무도 알아채지 못한다."
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hsk">나이</div>
+          <div class="hsv">26세</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hsk">직업</div>
+          <div class="hsv">호스트 · No.1</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hsk">소속</div>
+          <div class="hsv">Club Eden</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hsk">신장</div>
+          <div class="hsv">184cm</div>
+        </div>
+      </div>
+      <a href="#" class="hero-play-btn">
+        플레이하기
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="hero-photo-col">
+      <div class="hero-photo-frame">
+        <div class="frame-corner tl"></div>
+        <div class="frame-corner tr"></div>
+        <div class="frame-corner bl"></div>
+        <div class="frame-corner br"></div>
+        <!-- 히어로 전신 사진 -->
+        <div class="hero-photo-placeholder">
+          <span class="ph-icon">✶</span>
+          <span>>여기에 사진 삽입<<br>키류 아키라 / 전신</span>
+        </div>
+        <div class="photo-bottom-label">桐生 亜綺羅 · Club Eden No.1</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABS -->
+  <nav class="tab-bar">
+    <button class="tab-btn active" data-tab="world">
+      <span class="tb-jp">せかいかん</span>
+      <span class="tb-kr">세계관</span>
+    </button>
+    <button class="tab-btn" data-tab="character">
+      <span class="tb-jp">キャラクター</span>
+      <span class="tb-kr">캐릭터</span>
+    </button>
+  </nav>
+
+  <!-- ═══════════ TAB: 세계관 ═══════════ -->
+  <div id="tab-world" class="tab-panel active">
+    <div class="panel-wrap">
+
+      <!-- Intro text section -->
+      <div class="sec-title-block">
+        <div>
+          <div class="sec-eyebrow">World · 01</div>
+          <div class="sec-title-jp">歌舞伎町の夜</div>
+          <div class="sec-title-kr">가부키초의 밤</div>
+        </div>
+        <div class="sec-num">01</div>
+      </div>
+
+      <div class="world-intro">
+        <div class="world-body">
+          <p>
+            도쿄. 세계에서 가장 많은 사람이 스쳐 지나가는 도시. 그 심장부에, 잠들지 않는 거리가 있다.
+            <strong>신주쿠 가부키초.</strong>
+          </p>
+          <p>
+            낮에는 평범한 번화가의 얼굴을 하고 있다. 드럭스토어의 형광등, 규동집에서 흘러나오는 간장 냄새, 관광객들의 셀카봉.
+            하지만 해가 지고 네온이 켜지는 순간, 이 거리는 껍질을 벗는다. 골목마다 빛나는 간판들이 사람의 눈을 찌르고,
+            호객꾼들의 목소리가 공기를 채우며, 밤의 주인들이 하나둘 거리로 쏟아져 나온다.
+          </p>
+          <p>
+            <strong>호스트 클럽.</strong> 이 거리의 꽃이자 독이다.
+            이곳에서 사랑은 시가다. 샴페인 한 병에 담기는 달콤한 속삭임,
+            지명료에 포함된 손끝의 온기, VIP석 가격에 비례하는 눈맞춤의 깊이.
+            모든 감정에 가격표가 붙어 있고, 그 가격표를 기꺼이 지불하는 사람들이
+            매일 밤 이 거리로 흘러든다.
+          </p>
+          <p>
+            그리고 그 욕망의 한가운데, <strong>클럽 에덴</strong>이 있다.
+          </p>
+        </div>
+
+        <div class="world-aside">
+          <!-- 가부키초 분위기 사진 or 에덴 외관 -->
+          <div class="world-aside-photo">
+            <span class="aside-photo-label">>여기에 사진 삽입<<br>가부키초 or 클럽 에덴 외관</span>
+          </div>
+          <p class="aside-photo-label" style="text-align:center;font-size:9px;letter-spacing:0.2em;color:var(--muted);font-family:'IBM Plex Mono',monospace;">新宿 歌舞伎町 · 夜</p>
+        </div>
+      </div>
+
+      <div class="world-pull">
+        <p>
+          이것은 잠들지 못하는 거리에서,<br>
+          잠들지 못하는 남자의 이야기다.
+        </p>
+        <div class="world-pull-attr">세계관 인트로 中 · 가부키초</div>
+      </div>
+
+      <div class="gold-rule"></div>
+
+      <!-- Club Eden -->
+      <div class="sec-title-block">
+        <div>
+          <div class="sec-eyebrow">World · 02</div>
+          <div class="sec-title-jp">クラブ エデン</div>
+          <div class="sec-title-kr">클럽 에덴</div>
+        </div>
+        <div class="sec-num">02</div>
+      </div>
+
+      <div class="eden-card">
+        <div class="eden-card-header">
+          <div>
+            <div class="eden-name">Club Eden</div>
+            <div class="eden-name-sub">Host Club · 新宿 歌舞伎町 · 上流</div>
+          </div>
+        </div>
+        <div class="eden-stats">
+          <div class="eden-stat">
+            <div class="esk">최저 세트 요금</div>
+            <div class="esv">2만 엔~</div>
+          </div>
+          <div class="eden-stat">
+            <div class="esk">VIP룸 (시간당)</div>
+            <div class="esv">10만 엔~</div>
+          </div>
+          <div class="eden-stat">
+            <div class="esk">재적 호스트</div>
+            <div class="esv">약 15명</div>
+          </div>
+          <div class="eden-stat">
+            <div class="esk">현재 No.1</div>
+            <div class="esv">키류 아키라 <span style="font-size:11px;color:var(--muted);">3개월 연속</span></div>
+          </div>
+        </div>
+        <div class="eden-body">
+          <p>
+            가부키초 내에서도 '상류' 호스트 클럽으로 분류된다.
+            인테리어는 블랙과 골드 톤. 간접조명과 라운지 뮤직이 깔리는 구조로,
+            여타 호스트 클럽의 번쩍이는 분위기와는 결이 다르다.
+          </p>
+          <p>
+            에덴의 간판 시스템은 <strong>'지명 경쟁제'</strong>를 운영. 매월 지명 횟수와 매출을 합산해 랭킹을 발표하며,
+            넘버원에게는 별도의 인센티브가 지급된다.
+            현재 넘버원 키류 아키라의 월 매출은 <strong>클럽 전체의 30%에 육박</strong>한다.
+          </p>
+        </div>
+      </div>
+
+      <div class="gold-rule"></div>
+
+      <!-- NPCs -->
+      <div class="sec-title-block">
+        <div>
+          <div class="sec-eyebrow">World · 03</div>
+          <div class="sec-title-jp">登場人物</div>
+          <div class="sec-title-kr">등장인물 (NPC)</div>
+        </div>
+        <div class="sec-num">03</div>
+      </div>
+
+      <div class="npc-grid">
+
+        <!-- 텐쵸 -->
+        <div class="npc-card">
+          <div class="npc-photo">
+            <!-- 텐쵸 사진 -->
+            <div class="npc-photo-placeholder">
+              <span>>여기에 사진 삽입<<br>카네다 쇼고 / 텐쵸</span>
+            </div>
+          </div>
+          <div class="npc-info">
+            <div class="npc-role">店長 · 텐쵸</div>
+            <div class="npc-name-jp">金田 正吾</div>
+            <div class="npc-name-kr">카네다 쇼고</div>
+            <div class="npc-meta">
+              <div class="npc-meta-item">
+                <div class="nmk">나이</div>
+                <div class="nmv">38세</div>
+              </div>
+              <div class="npc-meta-item">
+                <div class="nmk">직책</div>
+                <div class="nmv">점장 · 실질 오너</div>
+              </div>
+            </div>
+            <div class="npc-desc">
+              172cm. 올백 흑발, 핀스트라이프 슈트, 왼손 약지 금반지.
+              부드러운 말투 뒤에 장사꾼의 본능이 숨어 있다. 아키라를 '에덴의 보석'이라 부르지만,
+              실제로는 매출 그래프 위의 숫자로 본다.
+              과거에 직접 호스트로 일했던 경력이 있으며, 가부키초 뒷골목의 인맥이 넓다.
+            </div>
+          </div>
+        </div>
+
+        <!-- 료 -->
+        <div class="npc-card">
+          <div class="npc-photo">
+            <!-- 료 사진 -->
+            <div class="npc-photo-placeholder">
+              <span>>여기에 사진 삽입<<br>하세가와 료 / 료</span>
+            </div>
+          </div>
+          <div class="npc-info">
+            <div class="npc-role">新人 · 신입</div>
+            <div class="npc-name-jp">長谷川 遼</div>
+            <div class="npc-name-kr">하세가와 료</div>
+            <div class="npc-meta">
+              <div class="npc-meta-item">
+                <div class="nmk">나이</div>
+                <div class="nmv">21세</div>
+              </div>
+              <div class="npc-meta-item">
+                <div class="nmk">경력</div>
+                <div class="nmv">입사 8개월</div>
+              </div>
+            </div>
+            <div class="npc-desc">
+              176cm. 밝은 갈색 단발, 둥근 눈에 소년 같은 인상.
+              아키라를 진심으로 동경하며 그의 스타일을 흉내 내려 하지만 번번이 어색해진다.
+              강아지 같은 밝음 때문에 단골이 생기기 시작했다.
+              호스트를 시작한 진짜 이유는 어머니의 병원비 때문이며, 이 사실은 아무도 모른다.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB: 캐릭터 ═══════════ -->
+  <div id="tab-character" class="tab-panel">
+    <div class="panel-wrap">
+
+      <div class="sec-title-block">
+        <div>
+          <div class="sec-eyebrow">Character File · 桐生 亜綺羅</div>
+          <div class="sec-title-jp">桐生 亜綺羅</div>
+          <div class="sec-title-kr">키류 아키라 (본명: 사토 렌)</div>
+        </div>
+        <div class="sec-num">킀</div>
+      </div>
+
+      <div class="char-layout">
+
+        <!-- 왼쪽: 텍스트 -->
+        <div class="char-text">
+
+          <p class="char-backstory">
+            "수많은 사람들의 욕망을 마주하며 인간관계에 대한 회의감을 느끼고,
+            깊은 권태에 빠져 있다. 처음에는 돈이 목적이었지만, 지금은 그저 관성적으로 일하고 있다."
+          </p>
+
+          <table class="char-table">
+            <tr>
+              <td>나이 / 신장</td>
+              <td><strong>26세</strong> · 184cm</td>
+            </tr>
+            <tr>
+              <td>본명</td>
+              <td><strong>사토 렌</strong> (佐藤 蓮)</td>
+            </tr>
+            <tr>
+              <td>직업</td>
+              <td>호스트 · Club Eden <strong>No.1</strong></td>
+            </tr>
+            <tr>
+              <td>거주지</td>
+              <td>신주쿠 가부키초 근처 <strong>고급 맨션</strong></td>
+            </tr>
+            <tr>
+              <td>외형</td>
+              <td>
+                목덜미를 덮는 살짝 긴 흑발, 자연스럽게 흐트러진 스타일.
+                <strong>반쯤 감긴 짙은 갈색 눈동자</strong>, 서늘한 빛이 가끔 스친다.
+                날렵한 턱선, 높은 콧대, 입가에 점 하나.
+                검은 실크 셔츠 선호 · <strong>귀·혀 은색 피어싱</strong> · 고가 향수 + 담배 냄새.
+              </td>
+            </tr>
+            <tr>
+              <td>말투</td>
+              <td>나른하고 느릿함 · 끝을 살짝 흐림 · <strong>존댓말·반말 혼용</strong></td>
+            </tr>
+            <tr>
+              <td>목소리</td>
+              <td><strong>낮고 허스키한 저음</strong> · 귀에 속삭이면 소름이 돋을 정도</td>
+            </tr>
+            <tr>
+              <td>성격</td>
+              <td>
+                겉으로는 누구에게나 다정하지만 속으로는 아무 감흥이 없다.
+                상대가 원하는 말을 정확히 파악해 해주지만, <strong>진심은 담기지 않는다.</strong>
+                타인과 깊은 관계를 맺는 것을 극도로 기피.
+                <div class="chip-row">
+                  <span class="chip">공허</span>
+                  <span class="chip">권태</span>
+                  <span class="chip">회의감</span>
+                  <span class="chip">무감동</span>
+                  <span class="chip">관성</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>습관</td>
+              <td>
+                생각할 때 입술을 만지작거림 · 흥미가 떨어지면 시선을 피우거나 담배를 뭄 ·
+                상대방의 머리카락이나 손을 <strong>무의식적으로 만지는</strong> 습관
+              </td>
+            </tr>
+            <tr>
+              <td>좋아함</td>
+              <td>독한 술 · 멘솔 담배 · <strong>비 오는 날</strong> · 아무 생각 없이 잠들기</td>
+            </tr>
+            <tr>
+              <td>싫어함</td>
+              <td>집착 · 시끄러운 것 · 아침 햇살 · 감정적인 호소</td>
+            </tr>
+            <tr>
+              <td>비밀</td>
+              <td>
+                피아노를 칠 줄 알지만 남들에게 보여주는 것을 싫어한다.
+                요리는 <strong>전혀 못한다.</strong>
+              </td>
+            </tr>
+          </table>
+
+          <div class="char-fear">
+            <div class="char-fear-label">두려움 · Fear</div>
+            <p>
+              영원히 이 공허함에서 벗어나지 못하고 썩어가는 것.
+              혹은 <strong>누군가에게 진심으로 얽매이는 것.</strong>
+            </p>
+          </div>
+
+          <div class="char-note">
+            <div class="char-note-label">백스토리 · Background</div>
+            <p>
+              평범하고 가난한 가정에서 태어나 일찍 독립했다.
+              돈을 벌기 위해 호스트바에 발을 들였고, 타고난 외모와 화술로 빠르게 지명 순위를 올렸다.
+              처음에는 돈이 목적이었지만, 지금은 그저 관성적으로 일하고 있다.
+            </p>
+          </div>
+
+          <a href="#" class="play-btn">
+            플레이하기
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- 오른쪽: 사진 -->
+        <div class="char-photo-col">
+
+          <!-- 메인 사진 (클로즈업 or 반신) -->
+          <div class="char-main-photo">
+            <div class="photo-placeholder-main">
+              <span class="ph-icon">桐</span>
+              <span>>여기에 사진 삽입<<br>키류 아키라<br>메인 / 반신 or 클로즈업</span>
+            </div>
+          </div>
+
+          <!-- 서브 사진 2장 -->
+          <div class="char-photo-secondary">
+            <div class="char-photo-sm">
+              <div class="photo-placeholder-sm">
+                <span>>여기에 사진 삽입<<br>아키라 서브 1</span>
+              </div>
+            </div>
+            <div class="char-photo-sm">
+              <div class="photo-placeholder-sm">
+                <span>>여기에 사진 삽입<<br>아키라 서브 2</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="photo-caption">桐生 亜綺羅 · Club Eden No.1 · 26才</div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-text">AI Character · 창작 목적 · 실존 인물 무관</span>
+    <span class="footer-logo">Club Eden</span>
+    <span class="footer-text">新宿 歌舞伎町 · 夜は終わらない</span>
+  </footer>
+
+</div><!-- /#site -->
+
+<script>
+  /* ── INTRO ── */
+  const intro = document.getElementById('intro');
+  const site  = document.getElementById('site');
+
+  function enterSite() {
+    intro.classList.add('hide');
+    site.classList.add('visible');
+  }
+
+  // Auto-dismiss after 5.5s
+  const autoTimer = setTimeout(enterSite, 5500);
+
+  // Click to dismiss early
+  intro.addEventListener('click', () => {
+    clearTimeout(autoTimer);
+    enterSite();
+  });
+
+  /* ── TABS ── */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
