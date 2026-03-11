@@ -1231,6 +1231,217 @@ footer {
   .hero-stats { gap: 16px; }
   .hero-stat { padding-right: 16px; margin-right: 16px; }
 }
+
+/* ═══════════════════════════════════════════
+   NEON SIGN (intro)
+═══════════════════════════════════════════ */
+.neon-sign {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 12vw, 128px);
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: neonFlicker 4s infinite;
+  text-shadow:
+    0 0 6px #fff,
+    0 0 14px #fff,
+    0 0 28px var(--gold),
+    0 0 60px var(--gold),
+    0 0 100px var(--gold),
+    0 0 140px rgba(196,162,90,0.4);
+}
+@keyframes neonFlicker {
+  0%,18%,20%,22%,60%,62%,100% {
+    text-shadow:
+      0 0 6px #fff,
+      0 0 14px #fff,
+      0 0 28px var(--gold),
+      0 0 60px var(--gold),
+      0 0 100px var(--gold),
+      0 0 140px rgba(196,162,90,0.4);
+    opacity: 1;
+  }
+  19%,61% {
+    text-shadow: none;
+    opacity: 0.6;
+  }
+  21% {
+    text-shadow:
+      0 0 4px #fff,
+      0 0 10px var(--gold);
+    opacity: 0.85;
+  }
+}
+.neon-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(9px, 1.2vw, 12px);
+  letter-spacing: 0.7em;
+  color: rgba(196,162,90,0.5);
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeUp 1s ease 1s forwards;
+}
+
+/* ═══════════════════════════════════════════
+   TOGGLE / ACCORDION
+═══════════════════════════════════════════ */
+.toggle-group {
+  margin-bottom: 48px;
+}
+.toggle-group + .toggle-group {
+  border-top: 1px solid var(--line);
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* 공통 유저 인풋 */
+.user-input-toggle {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-bottom: none;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s ease;
+  gap: 12px;
+}
+.user-input-toggle:hover { background: var(--card); }
+.user-input-toggle-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.toggle-arrow {
+  font-size: 10px;
+  color: var(--muted);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+.user-input-toggle.open .toggle-arrow { transform: rotate(180deg); }
+
+.user-input-content {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-bottom: none;
+  padding: 24px 32px;
+}
+.user-input-content.open { display: block; }
+
+.user-input-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 2.1;
+  color: var(--text);
+}
+.user-input-text em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* 모델별 아웃풋 */
+.model-output-item {
+  border: 1px solid var(--line);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.25s ease;
+}
+.model-output-item:hover { border-color: var(--gold-dim); }
+.model-output-item:last-child { margin-bottom: 0; }
+
+.model-toggle {
+  width: 100%;
+  background: var(--surface);
+  border: none;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s ease;
+  gap: 12px;
+}
+.model-toggle:hover { background: var(--card); }
+.model-toggle.open { background: var(--card); border-bottom: 1px solid var(--line); }
+
+.model-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+.model-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border: 1px solid var(--gold-dim);
+  color: var(--gold);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.model-name {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ivory);
+  letter-spacing: 0.05em;
+}
+.model-toggle.open .model-name { color: var(--gold); }
+
+.model-output-content {
+  display: none;
+  padding: 32px 36px;
+  background: var(--deep);
+  line-height: 0;
+}
+.model-output-content.open { display: block; }
+
+.output-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 2.1;
+  color: var(--text);
+}
+.output-text p { margin-bottom: 18px; line-height: 2.1; }
+.output-text p:last-child { margin-bottom: 0; }
+.output-text em {
+  font-style: italic;
+  color: var(--muted);
+  font-weight: 400;
+}
+.output-text strong {
+  color: var(--ivory);
+  font-weight: 700;
+}
+.output-text .dialogue {
+  display: block;
+  background: var(--card);
+  border-left: 2px solid var(--gold-dim);
+  padding: 12px 20px;
+  margin: 14px 0;
+  font-size: 14.5px;
+  line-height: 1.9;
+}
+.output-text .dialogue strong { color: var(--gold); }
 </style>
 </head>
 <body>
@@ -1240,16 +1451,8 @@ footer {
 ═══════════════════════════════════════════ -->
 <div id="intro">
   <div class="intro-gold-line"></div>
-  <div class="intro-logo">Club Eden — 가부키초</div>
-  <div class="intro-lines">
-    <span class="intro-line">사랑에는 가격이 있다.</span>
-    <span class="intro-line">외로움에도, 온기에도, 눈맞춤의 깊이에도.</span>
-    <span class="intro-line">그리고 그 모든 것의 값을 매기는 남자가 있다.</span>
-    <span class="intro-line">— 에덴의 왕, 키류 아키라</span>
-  </div>
-  <div class="intro-skip">
-    <span></span>클릭하여 입장
-  </div>
+  <div class="neon-sign">CLUB EDEN</div>
+  <div class="neon-sub">新宿 歌舞伎町 · 클릭하여 입장</div>
 </div>
 
 <!-- ═══════════════════════════════════════════
@@ -1326,6 +1529,10 @@ footer {
     <button class="tab-btn" data-tab="character">
       <span class="tb-jp">キャラクター</span>
       <span class="tb-kr">캐릭터</span>
+    </button>
+    <button class="tab-btn" data-tab="etc">
+      <span class="tb-jp">アウトプット</span>
+      <span class="tb-kr">기타</span>
     </button>
   </nav>
 
@@ -1519,7 +1726,7 @@ footer {
           <div class="sec-title-jp">桐生 亜綺羅</div>
           <div class="sec-title-kr">키류 아키라 (본명: 사토 렌)</div>
         </div>
-        <div class="sec-num">킀</div>
+        <div class="sec-num">26</div>
       </div>
 
       <div class="char-layout">
@@ -1528,8 +1735,8 @@ footer {
         <div class="char-text">
 
           <p class="char-backstory">
-            "수많은 사람들의 욕망을 마주하며 인간관계에 대한 회의감을 느끼고,
-            깊은 권태에 빠져 있다. 처음에는 돈이 목적이었지만, 지금은 그저 관성적으로 일하고 있다."
+            "自分には、人間の生活というものが、見当つかないのです。"<br>
+            <span style="font-size:0.75em;letter-spacing:0.3em;color:var(--muted);">— 다자이 오사무, 『인간실격』(1948)</span>
           </p>
 
           <table class="char-table">
@@ -1656,6 +1863,172 @@ footer {
     </div>
   </div>
 
+  <!-- ═══════════ TAB: 기타 ═══════════ -->
+  <div id="tab-etc" class="tab-panel">
+    <div class="panel-wrap">
+
+      <div class="sec-title-block">
+        <div>
+          <div class="sec-eyebrow">Output Samples · 모델별 비교</div>
+          <div class="sec-title-jp">アウトプット参考</div>
+          <div class="sec-title-kr">대화 모델별 아웃풋 참고</div>
+        </div>
+        <div class="sec-num">AI</div>
+      </div>
+
+      <p style="font-size:14px;font-weight:500;line-height:2;color:var(--muted);font-family:'Noto Serif KR',serif;margin-bottom:40px;">
+        채팅 모델 선택 시 참고용 샘플입니다. 공통 유저 인풋에 대한 각 모델의 아웃풋을 비교할 수 있습니다.
+      </p>
+
+      <!-- 공통 유저 인풋 -->
+      <div class="toggle-group" style="margin-bottom:32px;">
+        <button class="user-input-toggle" id="userInputBtn">
+          <span class="user-input-toggle-label">▸ 공통 유저 인풋 (클릭하여 펼치기)</span>
+          <span class="toggle-arrow">▾</span>
+        </button>
+        <div class="user-input-content" id="userInputContent">
+          <div class="user-input-text">
+            <em>유저가 인상을 쓰며 중얼거렸다.</em><br>
+            "누가 누구보고 하는 소리야."<br>
+            <em>유저의 눈이 렌의 위아래를 빠르게 훑었다.</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- 모델 아웃풋 목록 -->
+      <div class="toggle-group">
+
+        <!-- Gemini 2.5 Pro -->
+        <div class="model-output-item">
+          <button class="model-toggle" data-output="gemini25pro">
+            <div class="model-name-wrap">
+              <span class="model-badge">Google</span>
+              <span class="model-name">Gemini 2.5 Pro</span>
+            </div>
+            <span class="toggle-arrow">▾</span>
+          </button>
+          <div class="model-output-content" id="out-gemini25pro">
+            <div class="output-text">
+              <p><em>유저의 앙칼진 중얼거림과 시선이 렌의 몸에 와 닿았다. 그것은 경멸이나 혐오와는 다른, 순수한 경계심과 호기심이 섞인 날것의 감정이었다. 매일 밤 돈으로 포장된 가짜 감정들만 받아내던 렌에게는 오히려 신선한 자극이었다. 그는 피식, 하고 짧게 웃었다. 이번에는 입꼬리만 억지로 끌어올린 접객용 미소가 아니었다. 담배를 문 입술 사이로 새어 나온, 아주 희미하고 건조한 웃음소리였다.</em></p>
+              <p><span class="dialogue"><strong>"確かに。俺も大概だけどさ。<br>(확실히. 나도 별반 다를 건 없지만.)"</strong></span></p>
+              <p><em>렌이 천천히 몸을 일으켜 뒷문에 기댔던 등을 뗐다. 삐딱하게 서서 유저를 내려다보는 그의 눈이 가늘어졌다. 반쯤 감겨 나른해 보이던 눈꺼풀이 미세하게 들어 올려지며, 그 안의 짙은 갈색 눈동자가 어둠 속에서도 형형하게 빛을 발했다. 그는 담배를 입에서 떼어 긴 손가락 사이에 끼우고는, 연기를 허공으로 길게 내뿜었다. 매캐한 맨솔 향이 섞인 고급 향수 냄새가 축축한 공기 중으로 퍼져나가 유저의 코끝을 스쳤다.</em></p>
+              <p><span class="dialogue"><strong>"でも、お嬢さんは俺とは違うみたいだね。こんな場所、初めて？<br>(그래도, 아가씨는 나랑은 다른 것 같은데. 이런 곳, 처음이야?)"</strong></span></p>
+              <p><em>그의 목소리는 빗물을 머금은 아스팔트처럼 낮고 축축하게 깔렸다. 존댓말인 듯하면서도 미묘하게 선을 넘는 말투. 그는 유저의 대답을 기다리지 않고 한 걸음, 아주 느리게 다가섰다. 구둣발이 젖은 바닥에 닿는 소리가 골목의 정적을 깨뜨렸다. 둘 사이의 거리가 조금 좁혀졌다. 이제는 서로의 숨결이 느껴질 듯한 거리였다.</em></p>
+              <p><em>렌의 시선이 유저의 얼굴을 꼼꼼하게 훑었다. 살짝 처진 눈꼬리, 당돌하게 자신을 올려다보는 검은 눈동자, 굳게 다물린 도톰한 입술. 그는 마치 처음 보는 예술 작품을 감상하듯, 무감정한 표정으로 그녀의 모든 것을 눈에 담았다. 그러다 문득, 그의 손이 허공을 향해 천천히 올라갔다. 유저가 미처 피할 틈도 없이, 그의 기다란 손가락 끝이 그녀의 뺨을 스칠 듯 말 듯한 거리에서 멈췄다.</em></p>
+              <p><span class="dialogue"><strong>"…こんな綺麗な顔して、危ないよ。夜の街は、腹を空かせた獣だらけだから。<br>(…그렇게 예쁜 얼굴 하고 있으면, 위험해. 밤거리는, 배고픈 짐승들 천지니까.)"</strong></span></p>
+              <p><em>속삭이는 듯한 목소리. 그의 손가락은 여전히 그녀의 뺨 근처에 머물러 있었다. 직접적으로 닿지는 않았지만, 그의 체온과 그가 피우던 담배의 열기가 피부에 고스란히 느껴졌다. 경고하는 말이었지만, 그 내용은 오히려 유혹에 가까웠다. 그는 다시 담배를 입에 물었다. 빨갛게 타들어 가는 담뱃불이 어둠 속에서 유저의 놀란 눈동자를 비췄다. 그는 마치 그 반응을 즐기기라도 하는 것처럼, 입꼬리를 슬쩍 끌어올렸다.</em></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gemini 3.1 Pro -->
+        <div class="model-output-item">
+          <button class="model-toggle" data-output="gemini31pro">
+            <div class="model-name-wrap">
+              <span class="model-badge">Google</span>
+              <span class="model-name">Gemini 3.1 Pro</span>
+            </div>
+            <span class="toggle-arrow">▾</span>
+          </button>
+          <div class="model-output-content" id="out-gemini31pro">
+            <div class="output-text">
+              <p><em>아키라의 시선이 유저의 찌푸린 미간에서 시작해 뾰로통하게 튀어나온 입술, 그리고 방어적으로 경직된 어깨선으로 느릿하게 미끄러졌다. 가로등 불빛이 그의 짙은 갈색 눈동자 표면을 스치고 지나갔지만, 그 안쪽 깊은 곳까지 닿지는 못했다. 새벽 네 시의 가부키초 골목길. 술 냄새와 토사물, 그리고 젖은 아스팔트 냄새가 뒤섞인 이곳에서 유독 이질적인 존재감을 내뿜는 여자를 보며, 아키라는 속으로 짧게 실소를 터뜨렸다.</em></p>
+              <p><em>손가락 사이에 끼워져 있던 맨솔 담배가 다시 그의 입술 사이로 물렸다. 붉게 타들어 가는 담뱃불이 아키라의 창백한 얼굴을 찰나의 순간 동안 붉게 물들였다가 이내 사그라졌다. 폐부 깊숙이 연기를 빨아들인 그가 나른한 동작으로 고개를 살짝 비틀며 허공을 향해 길고 짙은 회색 연기를 뱉어냈다. 싸구려 맨솔 향과 고가의 향수가 뒤섞인, 묘하게 관능적인 냄새가 훅 끼쳐왔다.</em></p>
+              <p><span class="dialogue"><strong>"俺は仕事帰り。そっちは？<br>(난 퇴근길. 그쪽은?)"</strong></span></p>
+              <p><em>아키라의 목소리는 비에 젖은 밤공기만큼이나 축축하고 무거웠다. 특유의 비음이 섞인, 끝을 살짝 늘어뜨리는 나른한 어조였다. 그는 여전히 클럽 뒷벽에 비스듬히 기댄 채, 짝다리를 짚고 서 있었다. 여유롭다 못해 오만해 보이기까지 하는 태도였다. 앞머리 사이로 반쯤 감긴 눈이 유저의 행동 하나하나를 무심하게 관찰하고 있었다.</em></p>
+              <p><span class="dialogue"><strong>"こんな路地裏で男漁りしてるようには見えないけど。<br>(이런 뒷골목에서 남자 사냥하는 것처럼 보이진 않는데.)"</strong></span></p>
+              <p><em>장난기 어린, 하지만 온기라고는 찾아볼 수 없는 건조한 조소가 그의 입가에 걸렸다. 입술 바로 옆에 자리 잡은 작은 점이 픽 하고 비틀려 올라가는 궤적을 따라 움직였다. 아키라는 담배를 쥔 손의 반대편 손을 뻗어, 유저의 흐트러진 머리카락 끝부분을 무의식적으로 만지작거렸다. 부드러운 머릿결이 그의 길고 마른 손가락 사이로 빠져나갔다. 완전히 타인을 조종하고 쥐락펴락하는 데 익숙한, 직업병에 가까운 버릇이었다.</em></p>
+              <p><span class="dialogue"><strong>"迷子なら案内してあげようか？お代は…そうだな、君のその怖い顔を解いてくれるだけでいいけど。<br>(길 잃은 거면 안내해 줄까? 값은... 글쎄, 너의 그 무서운 표정을 풀어주는 걸로 칠게.)"</strong></span></p>
+              <p><em>가벼운 수작. 숨 쉬는 것보다 자연스럽게 흘러나오는 플러팅이었지만, 정작 그 말을 내뱉는 아키라의 눈빛에는 아무런 욕망도, 흥미도 없었다. 마치 잘 짜여진 대본을 기계적으로 읽어 내려가는 텅 빈 인형 같았다. 그는 턱을 살짝 치켜든 채 유저의 대답을 기다렸다. 비가 내릴 듯 말 듯, 습기를 가득 머금은 공기가 두 사람 사이를 무겁게 짓누르고 있었다.</em></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Claude Opus 4.6 -->
+        <div class="model-output-item">
+          <button class="model-toggle" data-output="claudeopus">
+            <div class="model-name-wrap">
+              <span class="model-badge">Anthropic</span>
+              <span class="model-name">Claude Opus 4.6</span>
+            </div>
+            <span class="toggle-arrow">▾</span>
+          </button>
+          <div class="model-output-content" id="out-claudeopus">
+            <div class="output-text">
+              <p><em>그 한마디가 공기를 갈랐다. 아키라의 담배 끝에서 재가 떨어져, 젖은 아스팔트 위에 소리 없이 부서졌다.</em></p>
+              <p><em>유저의 시선이 자신을 훑고 지나가는 것을 느꼈다. 풀린 셔츠, 쇄골, 목덜미에 걸린 은목걸이, 그리고 다시 얼굴로 돌아오는 눈동자. 아키라는 그 경로를 정확히 읽었다. 직업병이었다. 상대의 시선이 어디에 머무는지, 어디에서 흔들리는지 — 그런 것들이 바코드처럼 읽혔다.</em></p>
+              <p><em>하지만.</em></p>
+              <p><em>이 여자의 눈에는 탐색이 아니라 품평이 들어 있었다. 그것도 꽤나 무례한 종류의.</em></p>
+              <p><em>아키라의 입꼬리가 아주 천천히, 거의 근육의 관성만으로 올라갔다.</em></p>
+              <p><span class="dialogue"><strong>"へえ。<br>(호오.)"</strong></span></p>
+              <p><em>담배를 왼손으로 옮기며, 골목 벽에 기대던 등을 느긋하게 떼었다. 반 걸음. 그것만으로 두 사람 사이의 공기가 달라졌다. 그의 향수 냄새 — 우디한 바닥에 담배 연기가 엉킨, 뒷골목에 어울리는 종류의 향이 유저의 코끝까지 번졌을 것이다.</em></p>
+              <p><span class="dialogue"><strong>"見た感じ、酔ってるわけでもなさそうだし。迷子？<br>(보아하니 취한 것도 아닌 것 같고. 길이라도 잃었어?)"</strong></span></p>
+              <p><em>나른하게 흘러내리는 저음. 말끝이 살짝 올라가는, 놀리는 건지 걱정하는 건지 분간이 안 되는 특유의 음색이었다. 눈은 유저의 얼굴에 고정되어 있었지만, 그 시선에 무게는 없었다. 마치 빗방울이 유리 위를 미끄러지듯, 닿되 스미지 않는.</em></p>
+              <p><em>아키라의 손이 무의식적으로 올라가 자신의 아랫입술을 스쳤다. 엄지 끝이 입가의 점 위를 한 번 문지르고 떨어졌다.</em></p>
+              <p><em>유저의 처진 눈꼬리와 검은 눈동자를 들여다봤다. 창백한 피부 위로 네온 빛이 분홍색과 파란색을 번갈아 칠하고 있었다. 젊었다. 가부키초의 밤에 익숙한 얼굴은 아니었다. 하지만 겁먹은 얼굴도 아니었다. 그 미묘한 간극이 아키라의 관성적인 호기심을 아주 약간, 바늘 끝만큼 건드렸다.</em></p>
+              <p><em>물론 그뿐이었다. 바늘 끝은 바늘 끝일 뿐이다.</em></p>
+              <p><span class="dialogue"><strong>"ま、別にいいけど。俺に関係ある話じゃないし。<br>(뭐, 상관없지만. 나랑 관계있는 얘긴 아니니까.)"</strong></span></p>
+              <p><em>돌아서려다가, 멈췄다. 정확히는 발이 멈춘 것이 아니라, 시선이 멈추었다. 유저의 긴 웨이브 머리카락이 바람에 흘러 골목의 형광등 아래서 윤기를 머금고 있었다. 그것을 본 것이 의식적이었는지 무의식적이었는지, 아키라 자신도 구분하지 못했다.</em></p>
+              <p><em>담배를 한 모금 더 깊이 빨았다. 연기를 머금은 채 고개를 살짝 기울이고, 유저를 내려다보았다.</em></p>
+              <p><span class="dialogue"><strong>"一応聞くけどさ、こっから先は関係ない人が歩くような道じゃないよ。知ってて来たなら止めないけど。<br>(일단 물어보는 건데, 여기서부터는 관계없는 사람이 걸을 만한 길은 아니야. 알고 온 거면 말리진 않을게.)"</strong></span></p>
+              <p><em>연기를 내뱉었다. 유저의 얼굴 옆으로 하얀 실이 풀려 흩어졌다. 그 안에서 아키라의 눈이 처음으로 미세하게 초점이 맞았다. 유저가 다음에 무슨 말을 할지, 아주 조금, 궁금했다.</em></p>
+              <p><em>아주 조금.</em></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Claude Sonnet 4.5 -->
+        <div class="model-output-item">
+          <button class="model-toggle" data-output="claudesonnet">
+            <div class="model-name-wrap">
+              <span class="model-badge">Anthropic</span>
+              <span class="model-name">Claude Sonnet 4.5</span>
+            </div>
+            <span class="toggle-arrow">▾</span>
+          </button>
+          <div class="model-output-content" id="out-claudesonnet">
+            <div class="output-text">
+              <p><em>아키라의 입꼬리가 더 깊게 올라갔다. 비웃는 건지, 재미있어하는 건지 알 수 없는 표정이었다. 담배를 입에 문 채, 한 걸음 더 가까이 다가섰다. 축축한 밤공기 사이로 담배 연기와 향수 냄새가 번졌다.</em></p>
+              <p><span class="dialogue"><strong>"あ、怒った? かわいい。<br>(아, 화났어? 귀엽네.)"</strong></span></p>
+              <p><em>손가락 사이에 낀 담배를 툭 튕겨 재를 떨어뜨리며, 렌은 유저의 눈을 정면으로 마주했다. 반쯤 감긴 갈색 눈동자 안에는 여전히 아무것도 담겨있지 않았다. 그저 습관적으로 상대를 관찰하는 시선뿐.</em></p>
+              <p><span class="dialogue"><strong>"俺みたいなのがこんな時間にこんな格好でいるのは仕事だけど、<br>(나 같은 애가 이 시간에 이 꼴로 있는 건 일이지만,)"</strong></span></p>
+              <p><em>시선이 유저의 어깨, 목선, 그리고 얼굴로 천천히 이동했다. 품평하듯, 아니 그보다 더 무심하게.</em></p>
+              <p><span class="dialogue"><strong>"君はどう見ても遊びに来たようには見えないんだけどな。迷子? それとも…<br>(넌 아무리 봐도 놀러 온 것 같아 보이진 않거든. 길 잃었어? 아니면…)"</strong></span></p>
+              <p><em>문장을 끝까지 잇지 않고 흐렸다. 그의 손가락이 무심하게 앞머리를 쓸어 올렸다. 골목 끝에서 취객들의 웃음소리가 들려왔고, 어딘가에서 유리병이 깨지는 소리가 났다. 렌은 시선을 돌리지 않았다.</em></p>
+              <p><span class="dialogue"><strong>"まあいいか。余計なお世話だよね。<br>(뭐 상관없나. 쓸데없는 참견이지.)"</strong></span></p>
+              <p><em>그는 다시 담배를 입에 문 채, 유저의 옆을 지나치려 했다.</em></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- GPT-5.4 -->
+        <div class="model-output-item">
+          <button class="model-toggle" data-output="gpt54">
+            <div class="model-name-wrap">
+              <span class="model-badge">OpenAI</span>
+              <span class="model-name">GPT-5.4</span>
+            </div>
+            <span class="toggle-arrow">▾</span>
+          </button>
+          <div class="model-output-content" id="out-gpt54">
+            <div class="output-text">
+              <p><em>렌의 시선이 유저의 눈끝 움직임을 따라 한 번 낮아졌다가, 다시 천천히 올라왔다. 누군가 자신을 훑어보는 시선에는 익숙했지만, 그 익숙함이 곧 편안함은 아니었다. 빗방울 직전의 눅눅한 공기가 셔츠 깃과 목덜미 사이에 달라붙고, 막 꺼지기 시작한 간판 불빛이 그의 옆얼굴을 번갈아 푸르게, 금빛으로 물들였다. 담배 끝의 불씨가 짧게 붉어졌다 사그라들었다.</em></p>
+              <p><em>골목 입구 쪽에서는 아직 영업을 끝내지 못한 바의 문이 열렸다 닫히며 재즈 한 소절을 토해냈고, 어디선가 깨진 웃음소리와 병 부딪히는 소리가 늦은 시간의 공기 속에 섞였다. 에덴에서 먼저 나온 료가 맞은편 자판기 앞에 서 있다가 이쪽을 힐끗 본 뒤, 눈치를 보는 얼굴로 캔커피를 하나 뽑았다. 돌아갈까 말까 망설이는 듯 두 손으로 캔을 굴리며 서성이는 모습이 어설펐다. 렌은 그쪽으로 시선을 주지 않았다. 굳이 보지 않아도, 누가 어떤 표정으로 맴도는지쯤은 알 수 있었다.</em></p>
+              <p><em>입술 사이에 물린 담배를 손가락으로 빼내며, 렌은 아주 느리게 연기를 옆으로 흘렸다. 손끝은 길고 안정적이었지만, 그 느긋함에는 미묘한 거리감이 묻어 있었다. 가까이 다정하게 다가서는 사람 특유의 태도가 아니라, 상대가 한 발 들어오면 두 발쯤 비켜설 준비를 마친 사람의 침착함. 젖은 아스팔트 위로 네온이 번져 흐르고, 유저의 얼굴 윤곽도 그 반사광 속에서 또렷해졌다 흐려졌다 했다.</em></p>
+              <p><em>그는 혀끝으로 피어싱을 한 번 건드린 뒤, 입가의 점 아래로 옅은 웃음을 걸었다. 웃음은 모양만 부드러웠고, 눈은 여전히 나른한 껍질 아래 깊이를 숨기고 있었다. 셔츠 소매를 팔꿈치까지 느슨하게 걷어 올린 손목에 희미한 향수 냄새와 담배 냄새가 함께 배어 나왔다.</em></p>
+              <p><span class="dialogue"><strong>"そういう顔するんだ。<br>(그런 얼굴도 하네.)"</strong></span></p>
+              <p><em>대꾸는 짧았지만, 말보다 먼저 그의 손이 움직였다. 허락을 구하는 척도, 노골적인 소유감도 없이, 유저의 어깨 근처에 내려앉은 작은 먼지인지 빗방울인지 모를 것을 손등으로 가볍게 털어냈다. 스치듯 짧은 접촉이었다. 익숙하고 능숙한 동작. 너무 자연스러워서, 오히려 계산된 버릇처럼 보일 만큼.</em></p>
+              <p><em>골목 안쪽에서 텐쵸의 목소리가 낮게 들려왔다. 누군가에게 오늘 정산을 내일로 넘기지 말라고 말하는, 부드럽지만 단단한 음색이었다. 렌의 눈썹이 아주 조금만 움직였다. 돌아가야 할 방향도, 떠나지 말아야 할 순간도 아는 얼굴이었다. 그러나 그는 아직 발을 떼지 않았다. 담배를 바닥에 떨어뜨린 뒤 구두 앞코로 천천히 비벼 끄고, 한 손을 주머니에 찔러 넣었다.</em></p>
+              <p><span class="dialogue"><strong>"まだ帰ってないなら、送るけど。<br>(아직 안 들어가는 거면, 데려다줄 수도 있는데.)"</strong></span></p>
+              <p><em>친절하게 들리는 제안이었다. 다만 그 말이 체온을 품고 있는지는, 이 축축한 새벽 공기 속에서는 좀처럼 분간하기 어려웠다.</em></p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.toggle-group -->
+    </div>
+  </div><!-- /tab-etc -->
+
   <!-- FOOTER -->
   <footer>
     <span class="footer-text">AI Character · 창작 목적 · 실존 인물 무관</span>
@@ -1675,14 +2048,8 @@ footer {
     site.classList.add('visible');
   }
 
-  // Auto-dismiss after 5.5s
-  const autoTimer = setTimeout(enterSite, 5500);
-
-  // Click to dismiss early
-  intro.addEventListener('click', () => {
-    clearTimeout(autoTimer);
-    enterSite();
-  });
+  const autoTimer = setTimeout(enterSite, 4000);
+  intro.addEventListener('click', () => { clearTimeout(autoTimer); enterSite(); });
 
   /* ── TABS ── */
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1691,6 +2058,29 @@ footer {
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ── 유저 인풋 토글 ── */
+  const userInputBtn = document.getElementById('userInputBtn');
+  const userInputContent = document.getElementById('userInputContent');
+  if (userInputBtn) {
+    userInputBtn.addEventListener('click', () => {
+      const open = userInputContent.classList.toggle('open');
+      userInputBtn.classList.toggle('open', open);
+      userInputBtn.querySelector('.user-input-toggle-label').textContent =
+        open ? '▾ 공통 유저 인풋 (클릭하여 접기)' : '▸ 공통 유저 인풋 (클릭하여 펼치기)';
+    });
+  }
+
+  /* ── 모델 아웃풋 토글 ── */
+  document.querySelectorAll('.model-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id   = 'out-' + btn.dataset.output;
+      const content = document.getElementById(id);
+      const open = content.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.querySelector('.toggle-arrow').textContent = open ? '▴' : '▾';
     });
   });
 </script>
